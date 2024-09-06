@@ -8,7 +8,12 @@ pipeline {
     stages {
         stage('Performance Tests') {
             steps {
-                sh 'jmeter --version'
+                sh 'jmeter -n -t PetClinic.jmx -l petclinic-results.jtl'
+            }
+        }
+        stage('Publish Results') {
+            steps {
+                perfReport sourceDataFiles: 'petclinic-results.jtl'
             }
         }
     }
